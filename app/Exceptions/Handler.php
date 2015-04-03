@@ -1,6 +1,8 @@
 <?php namespace App\Exceptions;
 
 use Exception;
+use Psr\Log\LoggerInterface;
+use App\Services\MyLog;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler {
@@ -11,8 +13,17 @@ class Handler extends ExceptionHandler {
 	 * @var array
 	 */
 	protected $dontReport = [
-		'Symfony\Component\HttpKernel\Exception\HttpException'
+		'Symfony\Component\HttpKernel\Exception\HttpException',
 	];
+
+	private $MyLog;
+
+	public function __construct(LoggerInterface $log, MyLog $MyLog)
+	{
+		$this->log = $log;
+		$this->MyLog = $MyLog;
+	}
+
 
 	/**
 	 * Report or log an exception.
@@ -24,7 +35,12 @@ class Handler extends ExceptionHandler {
 	 */
 	public function report(Exception $e)
 	{
-		return parent::report($e);
+		// 处理自定义
+		$this ->MyLog ->simpleError($e);
+		// if ($e instanceof \Illuminate\Database\QueryException) {
+		// 	\App\Services\MyLog::queryError($e);
+		// }
+		parent::report($e);
 	}
 
 	/**

@@ -30,6 +30,15 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
+		// \DB::listen(function($sql, $bindings, $time)
+		// {
+		// 	\Log::info([$sql, $bindings]);
+		// });
+		$user = \App\User::where('aaa', '=', '1') ->get();
+		// $user = \App\User::find(1);
+
+		// dd($user);
+		// 1
 		return view('welcome');
 	}
 
