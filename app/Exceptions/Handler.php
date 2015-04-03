@@ -16,12 +16,10 @@ class Handler extends ExceptionHandler {
 		'Symfony\Component\HttpKernel\Exception\HttpException',
 	];
 
-	private $MyLog;
 
-	public function __construct(LoggerInterface $log, MyLog $MyLog)
+	public function __construct(LoggerInterface $log)
 	{
 		$this->log = $log;
-		$this->MyLog = $MyLog;
 	}
 
 
@@ -36,10 +34,10 @@ class Handler extends ExceptionHandler {
 	public function report(Exception $e)
 	{
 		// 处理自定义
-		$this ->MyLog ->simpleError($e);
-		// if ($e instanceof \Illuminate\Database\QueryException) {
-		// 	\App\Services\MyLog::queryError($e);
-		// }
+		MyLog::simpleError($e);
+		if ($e instanceof \Illuminate\Database\QueryException) {
+			MyLog::queryError($e);
+		}
 		parent::report($e);
 	}
 

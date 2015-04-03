@@ -1,6 +1,8 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use BD;
+use App\Services\MyLog;
 
 class AppServiceProvider extends ServiceProvider {
 
@@ -11,10 +13,10 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		// \DB::listen(function($sql, $bindings, $time)
-		// {
-		// 	\Log::info($sql);
-		// });
+		DB::listen(function($sql, $bindings, $time)
+		{
+			MyLog::queryAll($sql, $bindings, $time);
+		});
 	}
 
 	/**
