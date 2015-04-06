@@ -31,7 +31,7 @@ class WelcomeController extends Controller {
 	public function index()
 	{
 		// $user = \App\User::where('aaa', '=', '1') ->get();
-		$user = \App\User::find(1);
+		// $user = \App\User::find(1);
 
 		return view('welcome');
 	}
